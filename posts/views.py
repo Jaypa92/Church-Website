@@ -29,3 +29,6 @@ def post_list(request):
     posts = Post.objects.all().order_by('-id')
     return render(request,'posts/post_list.html',{'posts':posts})
 
+def post_detail(request, post_id):
+    posts = get_object_or_404(Post, id=post_id)
+    return render(request, 'posts/post_detail.html', {'post' : posts})

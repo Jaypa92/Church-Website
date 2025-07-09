@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'admin.css' %}">
     <title>Document</title>
 </head>
 <body>
@@ -10,13 +12,16 @@
     <a href="{% url 'new_post' %}">Add New Post</a>
     <ul>
         {% for post in posts %}
-            <li>
-                <strong>{{post.title}}</strong>
+            <li class="admin-list">
+                <a href="{% url 'post_detail' post.id%}"><strong>{{post.title}} </strong></a>
+                <p>{{ post.created_at|date:"M d, Y h:i A" }}</p>
                 <form action="{% url 'delete_post' post.id %}" method = "post" style ="display:inline;">
                     {% csrf_token %}
                     <button type="submit">Delete</button>
                 </form>
             </li>
+        {% empty %}
+            <li>No posts yet.</li>
         {% endfor %}
     </ul>
 </body>
